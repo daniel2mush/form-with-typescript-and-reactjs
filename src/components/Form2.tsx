@@ -1,6 +1,7 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import FormModel from "./form/form-utils/FormModel";
-import { RegistrationForm } from "./form/form-utils/formData";
+import { LoginForm, RegistrationForm } from "./form/form-utils/formData";
+import { LockKeyhole, Mail, User } from "lucide-react";
 
 interface formInputData {
   username: string;
@@ -62,6 +63,18 @@ export const ValidateForm = {
     password: "PASSWORDERROR",
     confirmPassword: "CONFIRMPASSWORDERROR",
   },
+};
+export interface IconInterface {
+  username: React.ReactNode;
+  email: React.ReactNode;
+  password: React.ReactNode;
+  confirmPassword: React.ReactNode;
+}
+const FormIcons: IconInterface = {
+  username: <User />,
+  email: <Mail />,
+  password: <LockKeyhole />,
+  confirmPassword: <LockKeyhole />,
 };
 
 const reducer = (state: any, action: any) => {
@@ -151,8 +164,6 @@ const Form2 = () => {
   const validateForm = (e: any) => {
     e.preventDefault();
 
-    console.log(state.formData.confirmPassword, "...........");
-
     if (state.formData.username === "") {
       dispatch({
         type: ValidateForm.error.username,
@@ -240,7 +251,7 @@ const Form2 = () => {
       });
     }
   };
-
+  const [isLogin, setIsLogin] = useState(true);
   return (
     <section className=" bg-gradient-to-l from-[#525351] to-[#7E9296] flex justify-center items-center min-h-screen">
       <div className=" grid grid-cols-2 w-full max-w-4xl shadow-lg h-[500px] bg-white rounded">
@@ -251,17 +262,37 @@ const Form2 = () => {
             className=" object-cover h-full w-full "
           />
         </div>
-        <div className=" flex justify-center items-center w-full px-10">
-          {
+        <div className=" flex justify-center items-center w-full px-10 flex-col">
+          <LockKeyhole className=" scale-150 animate-pulse" />
+          <div className=" flex justify-between items-center  mt-8 w-full ">
+            <h1 className=" font-bold text-2xl  text-gray-700">
+              {isLogin ? "Login" : "Registeration"}
+            </h1>
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className=" border-b-2 text-gray-500">
+              {isLogin ? "register" : "login"}
+            </button>
+          </div>
+          {isLogin ? (
+            <FormModel
+              formData={LoginForm}
+              dispatch={dispatch}
+              buttonText="Register"
+              onSubmit={validateForm}
+              state={state}
+              icons={FormIcons}
+            />
+          ) : (
             <FormModel
               formData={RegistrationForm}
               dispatch={dispatch}
               buttonText="Register"
               onSubmit={validateForm}
-              errorText={state.formDataError}
               state={state}
+              icons={FormIcons}
             />
-          }
+          )}
         </div>
       </div>
     </section>

@@ -30,3 +30,16 @@ export const  RegistrationForm :RegistrationType[] = [
   },
   
 ]
+
+export const LoginForm: RegistrationType[] = [
+  {
+    name: 'email',
+    type: 'email',
+    placeHolder : 'Enter your email'
+  },
+  {
+    name: 'password',
+    type: 'password',
+    placeHolder : 'Enter your password'
+  },
+]

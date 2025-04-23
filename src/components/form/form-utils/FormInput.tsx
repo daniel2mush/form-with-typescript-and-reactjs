@@ -29,7 +29,7 @@ const FormInput = ({
         placeholder={placeHolder}
         value={value}
         onChange={onChangeHandler}
-        className={`border-b-2 border-[${borderColor}]  w-full active:outline-none focus:outline-none py-2 mt-2`}
+        className={`border-b-2 border-[${borderColor}]  w-full  active:outline-none focus:outline-none py-2 mt-2 flex-2 `}
       />
       <p className=" text-red-600 text-center text-sm">{errorText}</p>
     </div>
